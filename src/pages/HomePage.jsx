@@ -1,3 +1,5 @@
+// src/HomePage.jsx
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
@@ -12,7 +14,7 @@ function HomePage() {
       .then((response) => response.json())
       .then((data) => {
         const films2024 = data.filter((film) => film.released === 2024);
-        setNewReleases(shuffleArray(films2024).slice(0, 4)); // Set to 4 films
+        setNewReleases(shuffleArray(films2024).slice(0, 4)); 
 
         const cronenbergFilms = data.filter((film) => {
           const isCronenbergDirector =
@@ -110,51 +112,52 @@ function HomePage() {
           }}
         >
           {newReleases.map((film) => (
-            <div
-              key={film.id}
-              className="film-card"
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                height: "220px",
-              }}
-            >
-              <img
-                src={film.thumbnail}
-                alt={film.title}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
+            <Link to={`/film/${film.id}`} key={film.id}>
               <div
-                className="film-info"
+                className="film-card"
                 style={{
-                  position: "absolute",
-                  bottom: "0",
-                  left: "0",
-                  width: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.0)",
-                  color: "white",
-                  padding: "10px",
-                  boxSizing: "border-box",
+                  position: "relative",
+                  overflow: "hidden",
+                  height: "220px",
                 }}
               >
-                <h3
+                <img
+                  src={film.thumbnail}
+                  alt={film.title}
                   style={{
-                    fontSize: "20px",
-                    margin: "0",
-                    textTransform: "uppercase",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <div
+                  className="film-info"
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    width: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.0)",
+                    color: "white",
+                    padding: "10px",
+                    boxSizing: "border-box",
                   }}
                 >
-                  {film.title}
-                </h3>
-                <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
-                  {film.released}
-                </p>
+                  <h3
+                    style={{
+                      fontSize: "20px",
+                      margin: "0",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {film.title}
+                  </h3>
+                  <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
+                    {film.released}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -181,51 +184,52 @@ function HomePage() {
           }}
         >
           {cronenbergs.map((film) => (
-            <div
-              key={film.id}
-              className="film-card"
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                height: "220px",
-              }}
-            >
-              <img
-                src={film.thumbnail}
-                alt={film.title}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
+            <Link to={`/film/${film.id}`} key={film.id}>
               <div
-                className="film-info"
+                className="film-card"
                 style={{
-                  position: "absolute",
-                  bottom: "0",
-                  left: "0",
-                  width: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.0)",
-                  color: "white",
-                  padding: "10px",
-                  boxSizing: "border-box",
+                  position: "relative",
+                  overflow: "hidden",
+                  height: "220px",
                 }}
               >
-                <h3
+                <img
+                  src={film.thumbnail}
+                  alt={film.title}
                   style={{
-                    fontSize: "20px",
-                    margin: "0",
-                    textTransform: "uppercase",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <div
+                  className="film-info"
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    width: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.0)",
+                    color: "white",
+                    padding: "10px",
+                    boxSizing: "border-box",
                   }}
                 >
-                  {film.title}
-                </h3>
-                <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
-                  {film.released}
-                </p>
+                  <h3
+                    style={{
+                      fontSize: "20px",
+                      margin: "0",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {film.title}
+                  </h3>
+                  <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
+                    {film.released}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -252,51 +256,52 @@ function HomePage() {
           }}
         >
           {arthouseHorror.map((film) => (
-            <div
-              key={film.id}
-              className="film-card"
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                height: "220px",
-              }}
-            >
-              <img
-                src={film.thumbnail}
-                alt={film.title}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
+            <Link to={`/film/${film.id}`} key={film.id}>
               <div
-                className="film-info"
+                className="film-card"
                 style={{
-                  position: "absolute",
-                  bottom: "0",
-                  left: "0",
-                  width: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.0)",
-                  color: "white",
-                  padding: "10px",
-                  boxSizing: "border-box",
+                  position: "relative",
+                  overflow: "hidden",
+                  height: "220px",
                 }}
               >
-                <h3
+                <img
+                  src={film.thumbnail}
+                  alt={film.title}
                   style={{
-                    fontSize: "20px",
-                    margin: "0",
-                    textTransform: "uppercase",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <div
+                  className="film-info"
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    width: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.0)",
+                    color: "white",
+                    padding: "10px",
+                    boxSizing: "border-box",
                   }}
                 >
-                  {film.title}
-                </h3>
-                <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
-                  {film.released}
-                </p>
+                  <h3
+                    style={{
+                      fontSize: "20px",
+                      margin: "0",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {film.title}
+                  </h3>
+                  <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
+                    {film.released}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
