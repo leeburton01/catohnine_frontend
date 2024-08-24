@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function AddFilmPage() {
   const [title, setTitle] = useState("");
@@ -15,7 +16,6 @@ function AddFilmPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
     if (metascore < 60) {
       alert("Metascore must be above 60 to add the film.");
       return;
@@ -44,98 +44,101 @@ function AddFilmPage() {
       .catch((error) => console.error("Error:", error));
   };
 
-
   return (
-    <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-      <h1 style={{ marginBottom: "20px" }}>Add a New Film</h1>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Title:</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Released Year:</label>
-          <input
-            type="number"
-            value={released}
-            onChange={(e) => setReleased(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Metascore:</label>
-          <input
-            type="number"
-            value={metascore}
-            onChange={(e) => setMetascore(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Director:</label>
-          <input
-            type="text"
-            value={director}
-            onChange={(e) => setDirector(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Writer (comma-separated):</label>
-          <input
-            type="text"
-            value={writer}
-            onChange={(e) => setWriter(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Composer:</label>
-          <input
-            type="text"
-            value={composer}
-            onChange={(e) => setComposer(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Genre (comma-separated):</label>
-          <input
-            type="text"
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Duration (minutes):</label>
-          <input
-            type="number"
-            value={duration}
-            onChange={(e) => setDuration(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-        <button
-          type="submit"
-          style={{ padding: "10px 15px", fontSize: "16px" }}
-        >
-          Add Film
-        </button>
-      </form>
+    <div>
+      {/* Navbar */}
+      <Navbar />
+
+      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Title:</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Released Year:</label>
+            <input
+              type="number"
+              value={released}
+              onChange={(e) => setReleased(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Metascore:</label>
+            <input
+              type="number"
+              value={metascore}
+              onChange={(e) => setMetascore(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Director:</label>
+            <input
+              type="text"
+              value={director}
+              onChange={(e) => setDirector(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Writer (comma-separated):</label>
+            <input
+              type="text"
+              value={writer}
+              onChange={(e) => setWriter(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Composer:</label>
+            <input
+              type="text"
+              value={composer}
+              onChange={(e) => setComposer(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Genre (comma-separated):</label>
+            <input
+              type="text"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <div style={{ marginBottom: "15px" }}>
+            <label>Duration (minutes):</label>
+            <input
+              type="number"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              required
+              style={{ width: "100%", padding: "8px", marginTop: "5px" }}
+            />
+          </div>
+          <button
+            type="submit"
+            style={{ padding: "10px 15px", fontSize: "16px" }}
+          >
+            Add Film
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

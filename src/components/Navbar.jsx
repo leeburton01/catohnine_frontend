@@ -1,18 +1,44 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/SHIVERS LOGO.jpg"; // Adjust the path as needed
 
 function Navbar() {
   return (
-    <nav>
+    <nav
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "20px",
+      }}
+    >
       <div className="logo">
-        <Link to="/">Logo</Link>
+        <Link to="/">
+          <img src={logo} alt="Logo" style={{ height: "40px" }} />
+        </Link>
       </div>
-      <ul>
-        <li>
-          <Link to="/films">Search</Link>
+      <ul
+        style={{
+          display: "flex",
+          listStyleType: "none",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <li style={{ marginRight: "20px" }}>
+          <Link
+            to="/films"
+            style={{ textDecoration: "none", color: "#780606" }}
+          >
+            🔍 Search
+          </Link>
         </li>
         <li>
-          <Link to="/contribute">Contribute</Link>
+          <Link
+            to="/add-film"
+            style={{ textDecoration: "none", color: "#780606" }}
+          >
+            ➕ Contribute
+          </Link>
         </li>
       </ul>
     </nav>
