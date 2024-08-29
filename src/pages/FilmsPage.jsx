@@ -163,7 +163,7 @@ function FilmsPage() {
                   border: "1px solid #ccc",
                   padding: "10px",
                   borderRadius: "8px",
-                  backgroundColor: "#f9f9f9",
+                  
                 }}
               >
                 {/* Poster */}
@@ -171,7 +171,7 @@ function FilmsPage() {
                   src={film.poster}
                   alt={film.title}
                   style={{
-                    width: "120px",
+                    width: "80px",
                     height: "auto",
                     marginRight: "20px",
                     objectFit: "cover",
@@ -181,13 +181,13 @@ function FilmsPage() {
 
                 {/* Title and Year */}
                 <div style={{ flex: 1 }}>
-                  <h2 style={{ margin: "0 0 10px 0", fontSize: "20px" }}>
+                  <h2 style={{ margin: "0 0 10px 0", fontSize: "18px" }}>
                     {film.title} ({film.released})
                   </h2>
                 </div>
 
                 {/* Film Details */}
-                <div style={{ flex: 1 }}>
+                <div style={{ flex: 1, marginRight: "180px" }}>
                   <p style={{ margin: "5px 0", fontSize: "14px" }}>
                     <strong>Written by:</strong>{" "}
                     {Array.isArray(film.writer)
@@ -210,7 +210,7 @@ function FilmsPage() {
                   <p
                     style={{
                       margin: "0",
-                      fontSize: "14px",
+                      fontSize: "18px",
                       fontWeight: "bold",
                     }}
                   >

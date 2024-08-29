@@ -9,6 +9,7 @@ function Navbar() {
         display: "flex",
         justifyContent: "space-between",
         padding: "20px",
+        marginBottom: "10px",
       }}
     >
       <div className="logo">
@@ -27,7 +28,11 @@ function Navbar() {
         <li style={{ marginRight: "20px" }}>
           <Link
             to="/films"
-            style={{ textDecoration: "none", color: "#780606" }}
+            style={{
+              textDecoration: "none",
+              color: "#780606",
+              fontSize: "18px",
+            }}
           >
             🔍 Search
           </Link>
@@ -35,7 +40,11 @@ function Navbar() {
         <li>
           <Link
             to="/add-film"
-            style={{ textDecoration: "none", color: "#780606" }}
+            style={{
+              textDecoration: "none",
+              color: "#780606",
+              fontSize: "18px",
+            }}
           >
             ➕ Contribute
           </Link>

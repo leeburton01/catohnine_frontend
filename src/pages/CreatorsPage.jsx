@@ -121,7 +121,7 @@ function CreatorsPage() {
                   alt={film.title}
                   style={{
                     width: "100%",
-                    height: "auto",
+                    height: "160px",
                   }}
                 />
                 {/* Overlay Title and Year */}
@@ -133,12 +133,13 @@ function CreatorsPage() {
                     color: "#fff",
                     textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
                     fontWeight: "bold",
-                    fontSize: "16px",
+                    fontSize: "14px",
                     textAlign: "left",
+                    textTransform: "uppercase",
                   }}
                 >
                   <div>{film.title}</div>
-                  <div style={{ fontSize: "14px", marginTop: "5px" }}>
+                  <div style={{ fontSize: "12px", marginTop: "5px" }}>
                     {film.released}
                   </div>
                 </div>
