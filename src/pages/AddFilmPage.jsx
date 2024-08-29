@@ -49,7 +49,7 @@ function AddFilmPage() {
       {/* Navbar */}
       <Navbar />
 
-      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
+      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto", marginTop: "80px" }}>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "15px" }}>
             <label>Title:</label>

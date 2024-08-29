@@ -5,7 +5,28 @@ import Navbar from "../components/Navbar";
 function FilmDetailsPage() {
   const { id } = useParams();
   const [film, setFilm] = useState(null);
-  const [director, setDirector] = useState(null);
+  const [director, setDirector] = useState({ name: null, id: null });
+  const [similarFilms, setSimilarFilms] = useState([]);
+
+  useEffect(() => {
+    // Scroll to the top when the film ID changes
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector(".navbar");
+
+      if (window.scrollY > window.innerHeight - 800) {
+        navbar.style.opacity = 0;
+      } else {
+        navbar.style.opacity = 1;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     // Fetch film details
@@ -33,16 +54,41 @@ function FilmDetailsPage() {
                 (d) => d.name === data.director
               );
               if (matchedDirector) {
-                setDirector(matchedDirector);
+                setDirector({
+                  name: matchedDirector.name,
+                  id: matchedDirector.id,
+                });
               } else {
-                setDirector({ name: "Director not found" });
+                setDirector({ name: data.director, id: null });
               }
             })
             .catch((error) => {
-              setDirector({ name: "Director not found" });
+              setDirector({ name: data.director, id: null });
             });
         } else {
-          setDirector({ name: "Director not available" });
+          setDirector({ name: "Director not available", id: null });
+        }
+
+        // Fetch similar films
+        if (data.genre && data.genre.length > 0) {
+          fetch(`http://localhost:8000/api/films?genre=${data.genre[0]}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  `Similar films fetch failed: ${response.status}`
+                );
+              }
+              return response.json();
+            })
+            .then((films) => {
+              // Shuffle and select 4 random films, excluding the current film
+              const filteredFilms = films.filter((f) => f.id !== data.id);
+              const shuffled = filteredFilms.sort(() => 0.5 - Math.random());
+              setSimilarFilms(shuffled.slice(0, 4));
+            })
+            .catch((error) => {
+              console.error("Error fetching similar films:", error);
+            });
         }
       })
       .catch((error) => {
@@ -54,12 +100,14 @@ function FilmDetailsPage() {
     return <p>Loading...</p>;
   }
 
+  
+
   return (
     <div>
       {/* Navbar */}
       <Navbar />
 
-      <div style={{ paddingTop: "0px", marginLeft: "165px" }}>
+      <div style={{ paddingTop: "80px", marginLeft: "165px" }}>
         {/* Title and Genres */}
         <div
           style={{
@@ -291,7 +339,6 @@ function FilmDetailsPage() {
                 ))}
               </div>
             )}
-            )}
           </div>
         </div>
 
@@ -412,6 +459,83 @@ function FilmDetailsPage() {
             </div>
           </div>
         </div>
+
+        {/* You Might Also Like Section */}
+        <section>
+          <h2
+            style={{
+              marginLeft: "0px",
+              fontSize: "18px",
+              fontWeight: "bold",
+              marginBottom: "-20px",
+            }}
+          >
+            You Might Also Like:
+          </h2>
+          <div
+            className="film-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              marginLeft: "-30px",
+              marginRight: "100px",
+              gap: "0px",
+              padding: "10px",
+            }}
+          >
+            {similarFilms.map((similarFilm) => (
+              <Link to={`/film/${similarFilm.id}`} key={similarFilm.id}>
+                <div
+                  className="film-card"
+                  style={{
+                    position: "relative",
+                    overflow: "hidden",
+                    height: "150px",
+                    maxWidth: "250px",
+                  }}
+                >
+                  <img
+                    src={similarFilm.thumbnail}
+                    alt={similarFilm.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      gap: "0px",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <div
+                    className="film-info"
+                    style={{
+                      position: "absolute",
+                      bottom: "0",
+                      left: "0",
+                      width: "100%",
+                      backgroundColor: "rgba(0, 0, 0, 0.0)",
+                      color: "white",
+                      padding: "10px",
+                      boxSizing: "border-box",
+                      textAlign: "left",
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontSize: "14px",
+                        margin: "0",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {similarFilm.title}
+                    </h3>
+                    <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
+                      {similarFilm.released}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );

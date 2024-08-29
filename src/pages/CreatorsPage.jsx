@@ -7,7 +7,22 @@ function CreatorsPage() {
   const [creator, setCreator] = useState(null);
 
   useEffect(() => {
-    // Fetch creator details
+    const handleScroll = () => {
+      const navbar = document.querySelector(".navbar");
+
+      if (window.scrollY > window.innerHeight - 800) {
+        navbar.style.opacity = 0;
+      } else {
+        navbar.style.opacity = 1;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    
     fetch(`http://localhost:8000/api/directors/${id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -27,13 +42,13 @@ function CreatorsPage() {
       {/* Navbar */}
       <Navbar />
 
-      <div style={{ paddingTop: "0px", marginLeft: "165px" }}>
+      <div style={{ paddingTop: "80px", marginLeft: "165px" }}>
         {/* Name and Roles */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: "center"
           }}
         >
           <h1

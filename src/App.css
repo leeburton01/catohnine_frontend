@@ -74,3 +74,13 @@ h1 {
   gap: 20px; /* Adjust gap between cards */
   padding: 20px;
 }
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: transparent; /* or semi-transparent */
+}
+

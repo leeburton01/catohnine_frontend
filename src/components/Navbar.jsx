@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/SHIVERS LOGO.jpg"; // Adjust the path as needed
+import logo from "../assets/SHIVERS LOGO.jpg";
 
 function Navbar() {
   return (
@@ -9,8 +9,15 @@ function Navbar() {
         display: "flex",
         justifyContent: "space-between",
         padding: "20px",
-        marginBottom: "10px",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0)", // Transparent background initially
+        zIndex: 1000, // Ensure it stays on top of other elements
+        transition: "background-color 0.5s ease", // Smooth transition for background
       }}
+      className="navbar"
     >
       <div className="logo">
         <Link to="/">
@@ -25,24 +32,24 @@ function Navbar() {
           padding: 0,
         }}
       >
-        <li style={{ marginRight: "20px" }}>
+        <li style={{ marginRight: "20px", marginTop: "15px" }}>
           <Link
             to="/films"
             style={{
               textDecoration: "none",
-              color: "#780606",
+              color: "#880808", // White text for visibility
               fontSize: "18px",
             }}
           >
             🔍 Search
           </Link>
         </li>
-        <li>
+        <li style={{ marginRight: "50px", marginTop: "15px" }}>
           <Link
             to="/add-film"
             style={{
               textDecoration: "none",
-              color: "#780606",
+              color: "#880808", // White text for visibility
               fontSize: "18px",
             }}
           >

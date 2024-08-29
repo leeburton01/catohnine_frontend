@@ -9,6 +9,21 @@ function FilmsPage() {
   const [selectedGenre, setSelectedGenre] = useState("All");
 
   useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector(".navbar");
+
+      if (window.scrollY > window.innerHeight - 800) {
+        navbar.style.opacity = 0;
+      } else {
+        navbar.style.opacity = 1;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     fetch("http://localhost:8000/api/films")
       .then((response) => response.json())
       .then((data) => {
@@ -81,7 +96,7 @@ function FilmsPage() {
       {/* Navbar */}
       <Navbar />
 
-      <div style={{ padding: "20px" }}>
+      <div style={{ padding: "20px", marginTop: "80px" }}>
         {/* Filters */}
         <div
           style={{

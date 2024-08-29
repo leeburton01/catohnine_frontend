@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar"; // Adjust the path as necessary
+import Navbar from "../components/Navbar";
 import "../App.css";
 
 function HomePage() {
   const [newReleases, setNewReleases] = useState([]);
+  const [currentFilmIndex, setCurrentFilmIndex] = useState(0);
   const [cronenbergs, setCronenbergs] = useState([]);
   const [arthouseHorror, setArthouseHorror] = useState([]);
   const [argento, setArgento] = useState([]);
@@ -18,7 +19,7 @@ function HomePage() {
       .then((response) => response.json())
       .then((data) => {
         const films2024 = data.filter((film) => film.released === 2024);
-        setNewReleases(shuffleArray(films2024).slice(0, 4));
+        setNewReleases(shuffleArray(films2024));
 
         const cronenbergFilms = data.filter((film) => {
           const isCronenbergDirector =
@@ -85,160 +86,113 @@ function HomePage() {
       .catch((error) => console.error("Error fetching films:", error));
   }, []);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentFilmIndex((prevIndex) =>
+        prevIndex === newReleases.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 6000); // Change every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, [newReleases]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector(".navbar");
+      
+      if (window.scrollY > window.innerHeight -200) {
+        navbar.style.opacity = 0;
+      } else {
+        navbar.style.opacity = 1;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+
   function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
   }
 
   return (
     <div>
-      {/* Add the Navbar component here */}
       <Navbar />
 
-      {/* New Releases Section */}
-      <section>
-        <h2
-          style={{
-            marginLeft: "10px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            marginBottom: "-20px",
-          }}
-        >
-          In Theaters
-        </h2>
-        <div
-          className="film-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "20px",
-            padding: "10px",
-          }}
-        >
-          {newReleases.map((film) => (
-            <Link to={`/film/${film.id}`} key={film.id}>
-              <div
-                className="film-card"
-                style={{
-                  position: "relative",
-                  overflow: "hidden",
-                  height: "200px",
-                }}
-              >
-                <img
-                  src={film.thumbnail}
-                  alt={film.title}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-                <div
-                  className="film-info"
-                  style={{
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
-                    width: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.0)",
-                    color: "white",
-                    padding: "10px",
-                    boxSizing: "border-box",
-                    textAlign: "left",
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontSize: "16px",
-                      margin: "0",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {film.title}
-                  </h3>
-                  <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
-                    {film.released}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
 
-      {/* September Homage: Dario Argento Section */}
-      <section>
-        <h2
+      
+
+      {/* Carousel Section */}
+      {newReleases.length > 0 && (
+        <section
           style={{
-            marginLeft: "10px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            marginBottom: "-20px",
+            position: "relative",
+            width: "100%",
+            height: "105vh", // Full viewport height
+            overflow: "hidden",
+            marginBottom: "20px",
+            marginTop: "-37px",
+            top: 0,
+            zIndex: 0,
           }}
         >
-          September Homage: Dario Argento
-        </h2>
-        <div
-          className="film-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "20px",
-            padding: "10px",
-          }}
-        >
-          {argento.map((film) => (
-            <Link to={`/film/${film.id}`} key={film.id}>
-              <div
-                className="film-card"
+          {newReleases.map((film, index) => (
+            <Link
+              to={`/film/${film.id}`}
+              key={film.id}
+              style={{
+                position: index === currentFilmIndex ? "relative" : "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                opacity: index === currentFilmIndex ? 1 : 0,
+                transition: "opacity 1s ease-in-out", // Smooth fade in/out
+                zIndex: index === currentFilmIndex ? 1 : 0,
+              }}
+            >
+              <img
+                src={film.thumbnail}
+                alt={film.title}
                 style={{
-                  position: "relative",
-                  overflow: "hidden",
-                  height: "200px",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  width: "100%",
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  color: "white",
+                  padding: "10px",
+                  boxSizing: "border-box",
+                  textAlign: "right",
                 }}
               >
-                <img
-                  src={film.thumbnail}
-                  alt={film.title}
+                <h3
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-                <div
-                  className="film-info"
-                  style={{
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
-                    width: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.0)",
-                    color: "white",
-                    padding: "10px",
-                    boxSizing: "border-box",
-                    textAlign: "left",
+                    fontSize: "24px",
+                    margin: "0",
+                    textTransform: "uppercase",
                   }}
                 >
-                  <h3
-                    style={{
-                      fontSize: "16px",
-                      margin: "0",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {film.title}
-                  </h3>
-                  <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
-                    {film.released}
-                  </p>
-                </div>
+                  {film.title}
+                </h3>
+                <p style={{ margin: "5px 0 0 0", fontSize: "16px" }}>
+                  {film.released}
+                </p>
               </div>
             </Link>
           ))}
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Other Sections */}
 
       {/* Brought to us by A24 Section */}
       <section>
@@ -262,6 +216,78 @@ function HomePage() {
           }}
         >
           {a24Films.map((film) => (
+            <Link to={`/film/${film.id}`} key={film.id}>
+              <div
+                className="film-card"
+                style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  height: "200px",
+                }}
+              >
+                <img
+                  src={film.thumbnail}
+                  alt={film.title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <div
+                  className="film-info"
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    width: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.0)",
+                    color: "white",
+                    padding: "10px",
+                    boxSizing: "border-box",
+                    textAlign: "left",
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontSize: "16px",
+                      margin: "0",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {film.title}
+                  </h3>
+                  <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
+                    {film.released}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+      {/* September Homage: Dario Argento Section */}
+      <section>
+        <h2
+          style={{
+            marginLeft: "10px",
+            fontSize: "20px",
+            fontWeight: "bold",
+            marginBottom: "-20px",
+          }}
+        >
+          September Homage: Dario Argento
+        </h2>
+        <div
+          className="film-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "20px",
+            padding: "10px",
+          }}
+        >
+          {argento.map((film) => (
             <Link to={`/film/${film.id}`} key={film.id}>
               <div
                 className="film-card"
@@ -677,6 +703,7 @@ function HomePage() {
           ))}
         </div>
       </section>
+     
     </div>
   );
 }
