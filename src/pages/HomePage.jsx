@@ -91,9 +91,9 @@ function HomePage() {
       setCurrentFilmIndex((prevIndex) =>
         prevIndex === newReleases.length - 1 ? 0 : prevIndex + 1
       );
-    }, 6000); // Change every 5 seconds
+    }, 6000); 
 
-    return () => clearInterval(intervalId); // Cleanup on unmount
+    return () => clearInterval(intervalId); 
   }, [newReleases]);
 
   useEffect(() => {
@@ -120,16 +120,13 @@ function HomePage() {
     <div>
       <Navbar />
 
-
-      
-
       {/* Carousel Section */}
       {newReleases.length > 0 && (
         <section
           style={{
             position: "relative",
             width: "100%",
-            height: "105vh", // Full viewport height
+            height: "105vh", 
             overflow: "hidden",
             marginBottom: "20px",
             marginTop: "-37px",
@@ -148,7 +145,7 @@ function HomePage() {
                 width: "100%",
                 height: "100%",
                 opacity: index === currentFilmIndex ? 1 : 0,
-                transition: "opacity 1s ease-in-out", // Smooth fade in/out
+                transition: "opacity 1s ease-in-out", 
                 zIndex: index === currentFilmIndex ? 1 : 0,
               }}
             >
@@ -167,7 +164,32 @@ function HomePage() {
                   bottom: "0",
                   left: "0",
                   width: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  backgroundColor: "rgba(0, 0, 0, 0.3)",
+                  color: "white",
+                  padding: "10px",
+                  marginBottom: "70px",
+                  boxSizing: "border-box",
+                  textAlign: "right",
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: "18px",
+                    marginBottom: "0",
+                    
+                  }}
+                >
+                  In Theaters
+                </h3>
+                
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  width: "100%",
+                  backgroundColor: "rgba(0, 0, 0, 0.3)",
                   color: "white",
                   padding: "10px",
                   boxSizing: "border-box",
@@ -245,7 +267,7 @@ function HomePage() {
                     color: "white",
                     padding: "10px",
                     boxSizing: "border-box",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   <h3
@@ -317,7 +339,7 @@ function HomePage() {
                     color: "white",
                     padding: "10px",
                     boxSizing: "border-box",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   <h3
@@ -390,7 +412,7 @@ function HomePage() {
                     color: "white",
                     padding: "10px",
                     boxSizing: "border-box",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   <h3
@@ -463,7 +485,7 @@ function HomePage() {
                     color: "white",
                     padding: "10px",
                     boxSizing: "border-box",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   <h3
@@ -536,7 +558,7 @@ function HomePage() {
                     color: "white",
                     padding: "10px",
                     boxSizing: "border-box",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   <h3
@@ -609,7 +631,7 @@ function HomePage() {
                     color: "white",
                     padding: "10px",
                     boxSizing: "border-box",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   <h3
@@ -682,7 +704,7 @@ function HomePage() {
                     color: "white",
                     padding: "10px",
                     boxSizing: "border-box",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   <h3
@@ -703,7 +725,6 @@ function HomePage() {
           ))}
         </div>
       </section>
-     
     </div>
   );
 }

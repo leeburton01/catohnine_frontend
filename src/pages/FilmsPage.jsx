@@ -57,12 +57,24 @@ function FilmsPage() {
           film.writer.some((writer) =>
             writer.toLowerCase().includes(searchLower)
           )) ||
+        (Array.isArray(film.production_company) &&
+          film.production_company.some((production_company) =>
+            production_company.toLowerCase().includes(searchLower)
+          )) ||
         (Array.isArray(film.director) &&
           film.director.some((director) =>
             director.toLowerCase().includes(searchLower)
           )) ||
+        (Array.isArray(film.composer) &&
+          film.composer.some((composer) =>
+            composer.toLowerCase().includes(searchLower)
+          )) ||
         (typeof film.writer === "string" &&
           film.writer.toLowerCase().includes(searchLower)) ||
+        (typeof film.production_company === "string" &&
+          film.production_company.toLowerCase().includes(searchLower)) ||
+        (typeof film.composer === "string" &&
+          film.composer.toLowerCase().includes(searchLower)) ||
         (typeof film.director === "string" &&
           film.director.toLowerCase().includes(searchLower))
       );
@@ -83,12 +95,26 @@ function FilmsPage() {
           return a.title.localeCompare(b.title);
         case "duration":
           return b.duration - a.duration;
+        case "free":
+          return (
+            (b.streaming?.some((service) => service.freeToWatch === "yes")
+              ? 1
+              : 0) -
+            (a.streaming?.some((service) => service.freeToWatch === "yes")
+              ? 1
+              : 0)
+          );
         default:
           return 0;
       }
     });
 
-    return sortedFilms;
+    
+    return sortOption === "free"
+      ? sortedFilms.filter((film) =>
+          film.streaming?.some((service) => service.freeToWatch === "yes")
+        )
+      : sortedFilms;
   }
 
   return (
@@ -136,6 +162,7 @@ function FilmsPage() {
             <option value="year">Sort by: Year</option>
             <option value="name">Sort by: Name</option>
             <option value="duration">Sort by: Duration</option>
+            <option value="free">Sort by: Free to Watch</option>
           </select>
 
           {/* Genre Dropdown */}
@@ -178,7 +205,6 @@ function FilmsPage() {
                   border: "1px solid #ccc",
                   padding: "10px",
                   borderRadius: "8px",
-                  
                 }}
               >
                 {/* Poster */}

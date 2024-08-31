@@ -71,7 +71,7 @@ h1 {
 .film-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px; /* Adjust gap between cards */
+  gap: 20px; 
   padding: 20px;
 }
 
@@ -81,6 +81,6 @@ h1 {
   left: 0;
   width: 100%;
   z-index: 10;
-  background: transparent; /* or semi-transparent */
+  background: transparent; 
 }
 

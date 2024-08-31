@@ -5,11 +5,10 @@ import Navbar from "../components/Navbar";
 function FilmDetailsPage() {
   const { id } = useParams();
   const [film, setFilm] = useState(null);
-  const [director, setDirector] = useState({ name: null, id: null });
+  const [directors, setDirectors] = useState([]);
   const [similarFilms, setSimilarFilms] = useState([]);
 
   useEffect(() => {
-    // Scroll to the top when the film ID changes
     window.scrollTo(0, 0);
   }, [id]);
 
@@ -17,10 +16,12 @@ function FilmDetailsPage() {
     const handleScroll = () => {
       const navbar = document.querySelector(".navbar");
 
-      if (window.scrollY > window.innerHeight - 800) {
-        navbar.style.opacity = 0;
-      } else {
-        navbar.style.opacity = 1;
+      if (navbar) {
+        if (window.scrollY > window.innerHeight - 800) {
+          navbar.style.opacity = 0;
+        } else {
+          navbar.style.opacity = 1;
+        }
       }
     };
 
@@ -29,86 +30,107 @@ function FilmDetailsPage() {
   }, []);
 
   useEffect(() => {
-    // Fetch film details
-    fetch(`http://localhost:8000/api/films/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Film fetch failed: ${response.status}`);
+    const fetchFilmAndDirectors = async () => {
+      try {
+        const filmResponse = await fetch(
+          `http://localhost:8000/api/films/${id}`
+        );
+        if (!filmResponse.ok) {
+          throw new Error(`Film fetch failed: ${filmResponse.status}`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Film data:", data); // Log the film data
-        setFilm(data);
+        const filmData = await filmResponse.json();
+        setFilm(filmData);
 
-        if (data.director) {
-          fetch(`http://localhost:8000/api/directors`)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`Directors fetch failed: ${response.status}`);
-              }
-              return response.json();
-            })
-            .then((directors) => {
-              const matchedDirector = directors.find(
-                (d) => d.name === data.director
-              );
-              if (matchedDirector) {
-                setDirector({
-                  name: matchedDirector.name,
-                  id: matchedDirector.id,
-                });
-              } else {
-                setDirector({ name: data.director, id: null });
-              }
-            })
-            .catch((error) => {
-              setDirector({ name: data.director, id: null });
-            });
-        } else {
-          setDirector({ name: "Director not available", id: null });
+        const directorsResponse = await fetch(
+          `http://localhost:8000/api/directors`
+        );
+        if (!directorsResponse.ok) {
+          throw new Error(
+            `Directors fetch failed: ${directorsResponse.status}`
+          );
         }
+        const directorsData = await directorsResponse.json();
+        setDirectors(directorsData);
 
-        // Fetch similar films
-        if (data.genre && data.genre.length > 0) {
-          fetch(`http://localhost:8000/api/films?genre=${data.genre[0]}`)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  `Similar films fetch failed: ${response.status}`
-                );
-              }
-              return response.json();
-            })
-            .then((films) => {
-              // Shuffle and select 4 random films, excluding the current film
-              const filteredFilms = films.filter((f) => f.id !== data.id);
-              const shuffled = filteredFilms.sort(() => 0.5 - Math.random());
-              setSimilarFilms(shuffled.slice(0, 4));
-            })
-            .catch((error) => {
-              console.error("Error fetching similar films:", error);
-            });
+        // Fetch similar films based on genre
+        if (filmData.genre && filmData.genre.length > 0) {
+          const similarFilmsResponse = await fetch(
+            `http://localhost:8000/api/films?genre=${filmData.genre[0]}`
+          );
+          if (!similarFilmsResponse.ok) {
+            throw new Error(
+              `Similar films fetch failed: ${similarFilmsResponse.status}`
+            );
+          }
+          const similarFilmsData = await similarFilmsResponse.json();
+          const filteredFilms = similarFilmsData.filter(
+            (f) => f.id !== filmData.id
+          );
+          const shuffled = filteredFilms.sort(() => 0.5 - Math.random());
+          setSimilarFilms(shuffled.slice(0, 4));
         }
-      })
-      .catch((error) => {
+      } catch (error) {
+        console.error("Error fetching film or directors:", error);
         setFilm({ title: "Film not found" });
-      });
+      }
+    };
+
+    fetchFilmAndDirectors();
   }, [id]);
+
+  // Helper function to render a name or array of names as links or plain text
+  const renderRole = (role) => {
+    if (Array.isArray(role)) {
+      // If the role is an array, process each item
+      return role.map((item, index) => (
+        <React.Fragment key={index}>
+          {renderRole(item)}
+          {index < role.length - 1 && ", "}
+        </React.Fragment>
+      ));
+    } else if (typeof role === "object" && role !== null) {
+      // Assuming the object has a 'name' property
+      const director = directors.find((d) => d.name === role.name);
+      if (director) {
+        return (
+          <Link
+            key={director.id}
+            style={{ color: "black", textDecoration: "none" }} // No underline
+            to={`/creator/${director.id}`}
+          >
+            {director.name}
+          </Link>
+        );
+      }
+      return role.name || "N/A";
+    } else {
+      // Handle strings or other primitive types
+      const director = directors.find((d) => d.name === role);
+      if (director) {
+        return (
+          <Link
+            key={director.id}
+            style={{ color: "black", textDecoration: "none" }} // No underline
+            to={`/creator/${director.id}`}
+          >
+            {director.name}
+          </Link>
+        );
+      }
+      return role || "N/A";
+    }
+  };
 
   if (!film) {
     return <p>Loading...</p>;
   }
 
-  
-
   return (
     <div>
-      {/* Navbar */}
       <Navbar />
 
       <div style={{ paddingTop: "80px", marginLeft: "165px" }}>
-        {/* Title and Genres */}
+        {/* Film Title, Genre, and Poster */}
         <div
           style={{
             display: "flex",
@@ -133,9 +155,7 @@ function FilmDetailsPage() {
           </div>
         </div>
 
-        {/* Layout: Poster on the left, video player on the right */}
         <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-          {/* Poster */}
           <div style={{ flex: "1", maxWidth: "300px" }}>
             <img
               src={film.poster}
@@ -148,7 +168,6 @@ function FilmDetailsPage() {
             />
           </div>
 
-          {/* Video Player */}
           <div style={{ flex: "2", maxWidth: "790px" }}>
             {film.streaming && film.streaming[0]?.freeToWatch === "yes" ? (
               <iframe
@@ -186,9 +205,7 @@ function FilmDetailsPage() {
           </div>
         </div>
 
-        {/* Container for Additional Film Details, Metascore, Streaming, and O.S.T Section */}
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Additional Film Details */}
           <div
             style={{
               marginTop: "0px",
@@ -197,22 +214,25 @@ function FilmDetailsPage() {
               fontSize: "16px",
             }}
           >
-            <p>{film.synopsis} </p>
+            <p>{film.synopsis}</p>
             <p>
               <strong>{film.duration}'</strong>
             </p>
           </div>
 
-          <div style={{ display: "flex", gap: "20px" }}>
-            {/* Metascore Section */}
-            <div
+          <div style={{ display: "flex", gap: "10px" }}>
+            <a
+              href={film.metacritic}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 marginTop: "0px",
                 maxWidth: "120px",
                 textAlign: "center",
-                marginRight: "0px",
+                marginRight: "10px",
                 padding: "10px",
                 borderRadius: "8px",
+                textDecoration: "none",
               }}
             >
               <h2
@@ -220,6 +240,7 @@ function FilmDetailsPage() {
                   fontSize: "16px",
                   marginBottom: "10px",
                   marginTop: "3px",
+                  color: "#000",
                 }}
               >
                 METASCORE
@@ -237,15 +258,14 @@ function FilmDetailsPage() {
               >
                 {film.metascore}
               </div>
-            </div>
-            {/* Streaming Section */}
+            </a>
             {film.streaming && film.streaming.length > 0 && (
               <div
                 style={{
                   marginTop: "0px",
                   maxWidth: "250px",
                   textAlign: "right",
-                  marginRight: "250px",
+                  marginRight: "260px",
                 }}
               >
                 <h2 style={{ fontSize: "16px", marginBottom: "10px" }}>
@@ -280,7 +300,6 @@ function FilmDetailsPage() {
                   )}
                 </div>
 
-                {/* IN THEATERS Box for 2024 films */}
                 {film.released === 2024 && (
                   <div
                     style={{
@@ -300,7 +319,6 @@ function FilmDetailsPage() {
                 )}
               </div>
             )}
-            {/* O.S.T Section */}
             {film.ost && film.ost.length > 0 && (
               <div
                 style={{
@@ -308,7 +326,7 @@ function FilmDetailsPage() {
                   maxWidth: "120px",
                   textAlign: "center",
                   marginLeft: "-250px",
-                  marginRight: "210px",
+                  marginRight: "230px",
                   padding: "10px",
                   borderRadius: "8px",
                 }}
@@ -342,7 +360,6 @@ function FilmDetailsPage() {
           </div>
         </div>
 
-        {/* Role-Name Section */}
         <div
           style={{
             marginTop: "20px",
@@ -356,35 +373,53 @@ function FilmDetailsPage() {
           }}
         >
           <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
-            <strong>Director:</strong>{" "}
-            {director?.id ? (
-              <Link to={`/creator/${director.id}`}>{director.name}</Link>
-            ) : (
-              director?.name || "N/A"
-            )}
-            <strong>Writer(s):</strong>{" "}
-            {Array.isArray(film.writer)
-              ? film.writer.join(", ")
-              : film.writer || "N/A"}
-            <strong>Composer:</strong>{" "}
-            {Array.isArray(film.composer)
-              ? film.composer.join(", ")
-              : film.composer || "N/A"}
-            <strong>Producer(s):</strong>{" "}
-            {Array.isArray(film.producers)
-              ? film.producers.join(", ")
-              : film.producers || "N/A"}
-            <strong>Cinematographer:</strong> {film.cinematographer || "N/A"}
-            <strong>Editor:</strong> {film.editor || "N/A"}
-            <strong>Casting Director:</strong> {film.casting_director || "N/A"}
-            <strong>Production Designer:</strong>{" "}
-            {film.production_designer || "N/A"}
-            <strong>Production Company:</strong>{" "}
-            {film.production_company || "N/A"}
+            <div>
+              <strong>Director:</strong>
+            </div>
+            <div>{renderRole(film.director)}</div>
+
+            <div>
+              <strong>Writer(s):</strong>
+            </div>
+            <div>{renderRole(film.writer)}</div>
+
+            <div>
+              <strong>Composer(s):</strong>
+            </div>
+            <div>{renderRole(film.composer)}</div>
+
+            <div>
+              <strong>Producer(s):</strong>
+            </div>
+            <div>{renderRole(film.producers)}</div>
+
+            <div>
+              <strong>Cinematographer:</strong>
+            </div>
+            <div>{renderRole(film.cinematographer)}</div>
+
+            <div>
+              <strong>Editor:</strong>
+            </div>
+            <div>{renderRole(film.editor)}</div>
+
+            <div>
+              <strong>Casting Director:</strong>
+            </div>
+            <div>{renderRole(film.casting_director)}</div>
+
+            <div>
+              <strong>Production Designer:</strong>
+            </div>
+            <div>{renderRole(film.production_designer)}</div>
+
+            <div>
+              <strong>Production Company:</strong>
+            </div>
+            <div>{film.production_company || "N/A"}</div>
           </div>
         </div>
 
-        {/* Cast and Box Office Sections */}
         <div
           style={{
             display: "flex",
@@ -393,7 +428,6 @@ function FilmDetailsPage() {
             marginLeft: "85px",
           }}
         >
-          {/* Cast Section */}
           <div
             style={{
               flex: 1,
@@ -416,7 +450,6 @@ function FilmDetailsPage() {
             </div>
           </div>
 
-          {/* Box Office Section */}
           <div
             style={{
               flex: 1,
@@ -460,7 +493,6 @@ function FilmDetailsPage() {
           </div>
         </div>
 
-        {/* You Might Also Like Section */}
         <section>
           <h2
             style={{

@@ -10,12 +10,13 @@ function Navbar() {
         justifyContent: "space-between",
         padding: "20px",
         position: "fixed",
+        
         top: 0,
         left: 0,
         width: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0)", // Transparent background initially
-        zIndex: 1000, // Ensure it stays on top of other elements
-        transition: "background-color 0.5s ease", // Smooth transition for background
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        zIndex: 1000, 
+        transition: "background-color 0.5s ease",
       }}
       className="navbar"
     >
@@ -37,7 +38,7 @@ function Navbar() {
             to="/films"
             style={{
               textDecoration: "none",
-              color: "#880808", // White text for visibility
+              color: "#880808", 
               fontSize: "18px",
             }}
           >
@@ -49,7 +50,7 @@ function Navbar() {
             to="/add-film"
             style={{
               textDecoration: "none",
-              color: "#880808", // White text for visibility
+              color: "#880808", 
               fontSize: "18px",
             }}
           >

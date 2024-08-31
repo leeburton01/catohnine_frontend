@@ -10,10 +10,13 @@ function CreatorsPage() {
     const handleScroll = () => {
       const navbar = document.querySelector(".navbar");
 
-      if (window.scrollY > window.innerHeight - 800) {
-        navbar.style.opacity = 0;
-      } else {
-        navbar.style.opacity = 1;
+      if (navbar) {
+        
+        if (window.scrollY > window.innerHeight - 800) {
+          navbar.style.opacity = 0;
+        } else {
+          navbar.style.opacity = 1;
+        }
       }
     };
 
@@ -22,7 +25,6 @@ function CreatorsPage() {
   }, []);
 
   useEffect(() => {
-    
     fetch(`http://localhost:8000/api/directors/${id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -48,7 +50,7 @@ function CreatorsPage() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <h1
@@ -118,13 +120,13 @@ function CreatorsPage() {
             <div
               key={film.id}
               style={{
-                flex: "1 1 23%", // Adjust the width of each film card to fit 4 in a row
+                flex: "1 1 23%", 
                 maxWidth: "260px",
                 textAlign: "center",
                 marginBottom: "20px",
-                position: "relative", // Ensure positioning context for the text overlay
+                position: "relative",
                 borderRadius: "8px",
-                overflow: "hidden", // Ensure rounded corners for the overlay as well
+                overflow: "hidden", 
               }}
             >
               <Link
