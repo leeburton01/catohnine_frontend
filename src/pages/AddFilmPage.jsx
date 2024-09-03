@@ -32,7 +32,7 @@ function AddFilmPage() {
       duration: parseInt(duration),
     };
 
-    fetch("http://localhost:8000/api/films", {
+    fetch("https://shiversbackend.adaptable.app/api/films", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

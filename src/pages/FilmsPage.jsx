@@ -24,7 +24,7 @@ function FilmsPage() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/films")
+    fetch("https://shiversbackend.adaptable.app/api/films")
       .then((response) => response.json())
       .then((data) => {
         setFilms(shuffleArray(data));
