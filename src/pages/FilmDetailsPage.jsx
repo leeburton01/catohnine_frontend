@@ -78,10 +78,10 @@ function FilmDetailsPage() {
     fetchFilmAndDirectors();
   }, [id]);
 
-  // Helper function to render a name or array of names as links or plain text
+  
   const renderRole = (role) => {
     if (Array.isArray(role)) {
-      // If the role is an array, process each item
+      
       return role.map((item, index) => (
         <React.Fragment key={index}>
           {renderRole(item)}
@@ -89,7 +89,7 @@ function FilmDetailsPage() {
         </React.Fragment>
       ));
     } else if (typeof role === "object" && role !== null) {
-      // Assuming the object has a 'name' property
+      
       const director = directors.find((d) => d.name === role.name);
       if (director) {
         return (
@@ -104,7 +104,7 @@ function FilmDetailsPage() {
       }
       return role.name || "N/A";
     } else {
-      // Handle strings or other primitive types
+      
       const director = directors.find((d) => d.name === role);
       if (director) {
         return (
@@ -416,7 +416,7 @@ function FilmDetailsPage() {
             <div>
               <strong>Production Company:</strong>
             </div>
-            <div>{film.production_company || "N/A"}</div>
+            <div>{renderRole(film.production_company)}</div>
           </div>
         </div>
 

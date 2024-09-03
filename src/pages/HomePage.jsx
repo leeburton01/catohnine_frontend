@@ -164,7 +164,7 @@ function HomePage() {
                   bottom: "0",
                   left: "0",
                   width: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.3)",
+                  backgroundColor: "rgba(0, 0, 0, 0)",
                   color: "white",
                   padding: "10px",
                   marginBottom: "70px",
@@ -176,6 +176,8 @@ function HomePage() {
                   style={{
                     fontSize: "18px",
                     marginBottom: "0",
+                    marginTop: "-30px",
+                    textColor: "white"
                     
                   }}
                 >
@@ -189,17 +191,21 @@ function HomePage() {
                   bottom: "0",
                   left: "0",
                   width: "100%",
+                  height: "120px",
                   backgroundColor: "rgba(0, 0, 0, 0.3)",
                   color: "white",
                   padding: "10px",
                   boxSizing: "border-box",
                   textAlign: "right",
+                  
                 }}
               >
                 <h3
                   style={{
                     fontSize: "24px",
                     margin: "0",
+                    margin: "0px",
+                    marginTop: "40px",
                     textTransform: "uppercase",
                   }}
                 >

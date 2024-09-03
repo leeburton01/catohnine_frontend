@@ -100,7 +100,7 @@ function CreatorsPage() {
           {/* Biography */}
           <div style={{ flex: "2", maxWidth: "800px", marginTop: "-18px" }}>
             <p>
-              <strong>Biography:</strong> {creator.biography}
+              <strong></strong> {creator.biography}
             </p>
           </div>
         </div>

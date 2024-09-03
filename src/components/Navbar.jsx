@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/SHIVERS LOGO.jpg";
+import logo from "../assets/shivers (transparent).png";
 
 function Navbar() {
   return (
@@ -10,10 +10,10 @@ function Navbar() {
         justifyContent: "space-between",
         padding: "20px",
         position: "fixed",
-        
         top: 0,
         left: 0,
         width: "100%",
+        height: "40px",
         backgroundColor: "rgba(0, 0, 0, 0)",
         zIndex: 1000, 
         transition: "background-color 0.5s ease",
