@@ -25,7 +25,7 @@ function CreatorsPage() {
   }, []);
 
   useEffect(() => {
-    fetch(`https://shiversbackend.adaptable.app/api/directors/${id}`)
+    fetch(`https://shiversbackend.adaptable.app/directors/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setCreator(data);

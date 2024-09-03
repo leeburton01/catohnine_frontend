@@ -33,7 +33,7 @@ function FilmDetailsPage() {
     const fetchFilmAndDirectors = async () => {
       try {
         const filmResponse = await fetch(
-          `https://shiversbackend.adaptable.app/api/films/${id}`
+          `https://shiversbackend.adaptable.app/films/${id}`
         );
         if (!filmResponse.ok) {
           throw new Error(`Film fetch failed: ${filmResponse.status}`);

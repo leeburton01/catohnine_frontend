@@ -15,7 +15,7 @@ function HomePage() {
   const [a24Films, setA24Films] = useState([]);
 
   useEffect(() => {
-    fetch("https://shiversbackend.adaptable.app/api/films")
+    fetch("https://shiversbackend.adaptable.app/films")
       .then((response) => response.json())
       .then((data) => {
         const films2024 = data.filter((film) => film.released === 2024);
