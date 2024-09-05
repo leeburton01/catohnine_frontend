@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "../App.css";
+import Footer from "../components/Footer";
 
 function HomePage() {
   const [newReleases, setNewReleases] = useState([]);

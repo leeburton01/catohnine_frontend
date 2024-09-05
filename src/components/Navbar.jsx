@@ -39,7 +39,7 @@ function Navbar() {
             style={{
               textDecoration: "none",
               color: "#880808", 
-              fontSize: "18px",
+              fontSize: "16px",
             }}
           >
             🔍 Search
@@ -51,7 +51,7 @@ function Navbar() {
             style={{
               textDecoration: "none",
               color: "#880808", 
-              fontSize: "18px",
+              fontSize: "16px",
             }}
           >
             ➕ Contribute

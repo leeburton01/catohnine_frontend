@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function CreatorsPage() {
   const { id } = useParams();
@@ -120,13 +121,13 @@ function CreatorsPage() {
             <div
               key={film.id}
               style={{
-                flex: "1 1 23%", 
+                flex: "1 1 23%",
                 maxWidth: "260px",
                 textAlign: "center",
                 marginBottom: "20px",
                 position: "relative",
                 borderRadius: "8px",
-                overflow: "hidden", 
+                overflow: "hidden",
               }}
             >
               <Link
@@ -165,6 +166,7 @@ function CreatorsPage() {
           ))}
         </div>
       </div>
+     
     </div>
   );
 }

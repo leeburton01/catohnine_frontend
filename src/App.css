@@ -84,3 +84,60 @@ h1 {
   background: transparent; 
 }
 
+
+.footer {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  height: 50px;
+}
+
+.footer-section {
+  display: flex;
+  align-items: center;
+}
+
+
+.footer-logo {
+  width: 100px;
+  height: auto;
+}
+
+
+.middle {
+  justify-content: center;
+}
+
+.social-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 15px;
+  filter: invert(100%); 
+}
+
+.social-icon:hover {
+  opacity: 0.8;
+}
+
+
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+ol li {
+  margin-bottom: 5px;
+}
+
+.footer-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}

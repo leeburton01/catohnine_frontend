@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function AddFilmPage() {
   const [title, setTitle] = useState("");
@@ -49,7 +50,14 @@ function AddFilmPage() {
       {/* Navbar */}
       <Navbar />
 
-      <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto", marginTop: "80px" }}>
+      <div
+        style={{
+          padding: "20px",
+          maxWidth: "600px",
+          margin: "0 auto",
+          marginTop: "80px",
+        }}
+      >
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "15px" }}>
             <label>Title:</label>
@@ -139,6 +147,7 @@ function AddFilmPage() {
           </button>
         </form>
       </div>
+      
     </div>
   );
 }
