@@ -53,7 +53,7 @@ function FilmDetailsPage() {
         const directorsData = await directorsResponse.json();
         setDirectors(directorsData);
 
-        // Fetch similar films based on genre
+        
         if (filmData.genre && filmData.genre.length > 0) {
           const similarFilmsResponse = await fetch(
             `http://localhost:8000/api/films?genre=${filmData.genre[0]}`
@@ -96,7 +96,7 @@ function FilmDetailsPage() {
         return (
           <Link
             key={director.id}
-            style={{ color: "black", textDecoration: "none" }} // No underline
+            style={{ color: "black", textDecoration: "none" }} 
             to={`/creator/${director.id}`}
           >
             {director.name}
@@ -111,7 +111,7 @@ function FilmDetailsPage() {
         return (
           <Link
             key={director.id}
-            style={{ color: "black", textDecoration: "none" }} // No underline
+            style={{ color: "black", textDecoration: "none" }} 
             to={`/creator/${director.id}`}
           >
             {director.name}
