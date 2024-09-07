@@ -132,6 +132,7 @@ function FilmDetailsPage() {
 
       <div style={{ paddingTop: "80px", marginLeft: "165px" }}>
         {/* Film Title, Genre, and Poster */}
+        {/* Film Title, Genre, and Poster */}
         <div
           style={{
             display: "flex",
@@ -570,7 +571,6 @@ function FilmDetailsPage() {
           </div>
         </section>
       </div>
-     
     </div>
   );
 }
