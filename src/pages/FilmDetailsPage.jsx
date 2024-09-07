@@ -43,7 +43,7 @@ function FilmDetailsPage() {
         setFilm(filmData);
 
         const directorsResponse = await fetch(
-          `http://localhost:8000/api/directors`
+          `https://shiversbackend.adaptable.app/directors`
         );
         if (!directorsResponse.ok) {
           throw new Error(
@@ -56,7 +56,7 @@ function FilmDetailsPage() {
         
         if (filmData.genre && filmData.genre.length > 0) {
           const similarFilmsResponse = await fetch(
-            `http://localhost:8000/api/films?genre=${filmData.genre[0]}`
+            `https://shiversbackend.adaptable.app/films?genre=${filmData.genre[0]}`
           );
           if (!similarFilmsResponse.ok) {
             throw new Error(
